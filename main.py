@@ -8,7 +8,7 @@ TOKEN = ""
 with open("TOKEN.txt", "r") as file:
     TOKEN = file.readline()
 
-
+#hello friends
 
 
 class Bot(commands.Bot):
