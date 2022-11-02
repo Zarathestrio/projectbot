@@ -33,5 +33,12 @@ async def on_ready():
 async def test(ctx):
     await ctx.send("Hybrid command")
 
+@bot.hybrid_command(with_app_command=True)
+async def pfp(ctx):
+    user = ctx.message.author
+    pfp = user.avatar
+    embed = discord.Embed()
+    embed.set_image(url=pfp)
+    await ctx.message.reply(embed=embed)
 
 bot.run(TOKEN)
