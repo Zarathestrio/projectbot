@@ -33,12 +33,24 @@ async def on_ready():
 async def test(ctx):
     await ctx.send("Hybrid command")
 
-@bot.hybrid_command(with_app_command=True)
+@bot.hybrid_group(with_app_command=True, fallback="pfp")
 async def pfp(ctx):
     user = ctx.message.author
+    print(type(user))
     pfp = user.avatar
     embed = discord.Embed()
     embed.set_image(url=pfp)
     await ctx.message.reply(embed=embed)
+
+@pfp.command(with_app_command=True)
+async def get(ctx, handle):
+    try:
+        user = await ctx.bot.fetch_user(handle[handle.index("@") + 1: -1])
+        pfp = user.avatar
+        embed = discord.Embed()
+        embed.set_image(url=pfp)
+        await ctx.message.reply(embed=embed)
+    except Exception:
+        await ctx.reply("Please pass a valid tag in order to use the function")
 
 bot.run(TOKEN)
