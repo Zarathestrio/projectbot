@@ -16,8 +16,6 @@ class Bot(commands.Bot):
         intents = discord.Intents.default()
         intents.message_content = True
         super().__init__(command_prefix="^", intents=intents)
-    async def setup_hook(self):
-        await self.tree.sync(guild=discord.Object(id=1032832201211007046))
 
 bot = Bot()
 
@@ -29,14 +27,15 @@ async def on_ready():
 
 
 
-@bot.hybrid_command(with_app_command=True)
+@bot.command(with_app_command=True)
 async def test(ctx):
     await ctx.send("Hybrid command")
 
-@bot.hybrid_group(with_app_command=True, fallback="pfp")
+
+
+@bot.group(with_app_command=True, fallback="pfp")
 async def pfp(ctx):
     user = ctx.message.author
-    print(type(user))
     pfp = user.avatar
     embed = discord.Embed()
     embed.set_image(url=pfp)
