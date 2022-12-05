@@ -100,8 +100,26 @@ async def help(ctx):
     await ctx.reply("Commands\n1.\t^initialize: This initializes the bot in your server and begins monitoring for activity!"
     + "\n2.\t^rps 'choice': Play Rock Paper Scissors against the bot! Following the command, type your selection to play!"
     + "\n3.\t^roll 'number of sides': Choose how many sides are on a dice roll! Following the command, type the amount of sides you want on your die."
-    + "\n4.\t^countLetters: Count the amount of letters in a word! Following the command type the word you want counted.")
+    + "\n4.\t^countLetters: Count the amount of letters in a word! Following the command type the word you want counted."
+    + "\n5.\t^userAge: This command tells the user how old their discord account is."
+    + "\n6.\t^gtn: This is a mini game where you must guess the number (1-50) the bot chooses. Following the command type your guess."
+    + "\n7.\t^meb: Think of a question in your head and the Magic 8 Ball will give you your answer!")
+    
 
 
+@bot.group(with_app_command=True, fallback="gtn")
+async def gtn(ctx, arg):
+    computer = random.choice(1-50)
+    if arg == computer:
+        await ctx.reply("You guessed " + arg + ".\nYou correctly guessed the same number the Bot chose!!")
+    else:
+        await ctx.reply("You guessed " + arg + ".\nYou did not guess the correct number. Try again!")
+
+@bot.group(with_app_command=True, fallback="meb")
+async def meb(ctx):
+    computer=random.choice(['It is certain','It is decidedly so.','Without a doubt.', 'Yes - definitely.', 'You may rely on it.', 'As I see it, yes.',
+    'Most likely.', 'Outlook is good.', 'Yes', 'Signs point to yes.', 'Reply hazy, try again.', 'Ask again later.', 'Better not tell you.', 'Cannot predict now.', 
+    'Concentrate and ask again.', 'Dont count on it.', 'My reply is no.', 'My sources say no.', 'Outlook is not so good.', 'Very doubtful.'])
+    await ctx.reply(computer)
 
 bot.run(TOKEN)
