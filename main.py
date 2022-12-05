@@ -53,6 +53,7 @@ async def get(ctx, handle):
     except Exception:
         await ctx.reply("Please pass a valid tag in order to use the function")
 
+<<<<<<< HEAD
 
 @bot.command(with_app_command=True)
 async def countLetters(ctx, arg):
@@ -60,4 +61,6 @@ async def countLetters(ctx, arg):
 
     await ctx.reply("There are " + str(count) + " letters in the word " + arg) 
 
+=======
+>>>>>>> 17ac96d8dc7e0666a0fd8c8070d3d2a840be94c0
 bot.run(TOKEN)
