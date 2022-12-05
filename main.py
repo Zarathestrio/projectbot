@@ -103,7 +103,7 @@ async def help(ctx):
     + "\n4.\t^countLetters: Count the amount of letters in a word! Following the command type the word you want counted."
     + "\n5.\t^userAge: This command tells the user how old their discord account is."
     + "\n6.\t^gtn: This is a mini game where you must guess the number (1-50) the bot chooses. Following the command type your guess."
-    + "\n7.\t^meb: Think of a question in your head and the Magic 8 Ball will give you your answer!")
+    + "\n7.\t^m8b: Think of a question in your head and the Magic 8 Ball will give you your answer!")
     
 
 
@@ -113,13 +113,18 @@ async def gtn(ctx, arg):
     if arg == computer:
         await ctx.reply("You guessed " + arg + ".\nYou correctly guessed the same number the Bot chose!!")
     else:
-        await ctx.reply("You guessed " + arg + ".\nYou did not guess the correct number. Try again!")
+        await ctx.reply("You guessed " + arg + ".\nYou did not guess the correct number (" + computer + "). Try again!")
 
-@bot.group(with_app_command=True, fallback="meb")
-async def meb(ctx):
+@bot.group(with_app_command=True, fallback="m8b")
+async def m8b(ctx):
     computer=random.choice(['It is certain','It is decidedly so.','Without a doubt.', 'Yes - definitely.', 'You may rely on it.', 'As I see it, yes.',
     'Most likely.', 'Outlook is good.', 'Yes', 'Signs point to yes.', 'Reply hazy, try again.', 'Ask again later.', 'Better not tell you.', 'Cannot predict now.', 
     'Concentrate and ask again.', 'Dont count on it.', 'My reply is no.', 'My sources say no.', 'Outlook is not so good.', 'Very doubtful.'])
     await ctx.reply(computer)
+
+@discord.Client.event
+async def on_member_join(ctx, member):
+    await ctx.send("Everyone please welcome " + member.name + " to the server!")
+
 
 bot.run(TOKEN)
