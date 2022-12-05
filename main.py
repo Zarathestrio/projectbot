@@ -21,6 +21,7 @@ class Bot(commands.Bot):
 
 bot = Bot()
 
+
 #tree = app_commands.CommandTree(bot)
 
 @bot.event
@@ -95,36 +96,52 @@ async def rps(ctx, arg):
     else:
         await ctx.reply(arg + " is not a valid option!")
 
-@bot.group(with_app_command=True, fallback="help")
-async def help(ctx):
-    await ctx.reply("Commands\n1.\t^initialize: This initializes the bot in your server and begins monitoring for activity!"
+@bot.group(with_app_command=True, fallback="commands")
+async def commands(ctx):
+    embed=discord.Embed(title=f"Commands", description=f"1.\t^initialize: This initializes the bot in your server and begins monitoring for activity!"
     + "\n2.\t^rps 'choice': Play Rock Paper Scissors against the bot! Following the command, type your selection to play!"
     + "\n3.\t^roll 'number of sides': Choose how many sides are on a dice roll! Following the command, type the amount of sides you want on your die."
     + "\n4.\t^countLetters: Count the amount of letters in a word! Following the command type the word you want counted."
     + "\n5.\t^userAge: This command tells the user how old their discord account is."
     + "\n6.\t^gtn: This is a mini game where you must guess the number (1-50) the bot chooses. Following the command type your guess."
-    + "\n7.\t^m8b: Think of a question in your head and the Magic 8 Ball will give you your answer!")
+    + "\n7.\t^m8b: Think of a question in your head and the Magic 8 Ball will give you your answer!"
+    + "\n8.\t^coinflip: Flip a coin using this command.")
+    embed.set_thumbnail(url=bot.avatar_url)
+    await ctx.send(embed=embed)
+
+
+    #await ctx.reply("Commands\n1.\t^initialize: This initializes the bot in your server and begins monitoring for activity!"
+    #+ "\n2.\t^rps 'choice': Play Rock Paper Scissors against the bot! Following the command, type your selection to play!"
+    #+ "\n3.\t^roll 'number of sides': Choose how many sides are on a dice roll! Following the command, type the amount of sides you want on your die."
+    #+ "\n4.\t^countLetters: Count the amount of letters in a word! Following the command type the word you want counted."
+    #+ "\n5.\t^userAge: This command tells the user how old their discord account is."
+    #+ "\n6.\t^gtn: This is a mini game where you must guess the number (1-50) the bot chooses. Following the command type your guess."
+    #+ "\n7.\t^m8b: Think of a question in your head and the Magic 8 Ball will give you your answer!"
+    #+ "\n8.\t^coinflip: Flip a coin using this command.")
     
 
 
 @bot.group(with_app_command=True, fallback="gtn")
 async def gtn(ctx, arg):
-    computer = random.choice(1-50)
+    
+    computer = random.randrange(1,50)
     if arg == computer:
         await ctx.reply("You guessed " + arg + ".\nYou correctly guessed the same number the Bot chose!!")
     else:
         await ctx.reply("You guessed " + arg + ".\nYou did not guess the correct number (" + computer + "). Try again!")
 
 @bot.group(with_app_command=True, fallback="m8b")
-async def m8b(ctx):
+async def m8b(ctx, arg):
     computer=random.choice(['It is certain','It is decidedly so.','Without a doubt.', 'Yes - definitely.', 'You may rely on it.', 'As I see it, yes.',
     'Most likely.', 'Outlook is good.', 'Yes', 'Signs point to yes.', 'Reply hazy, try again.', 'Ask again later.', 'Better not tell you.', 'Cannot predict now.', 
     'Concentrate and ask again.', 'Dont count on it.', 'My reply is no.', 'My sources say no.', 'Outlook is not so good.', 'Very doubtful.'])
-    await ctx.reply(computer)
+    await ctx.reply(arg + computer)
 
-@discord.Client.event
-async def on_member_join(ctx, member):
-    await ctx.send("Everyone please welcome " + member.name + " to the server!")
+@bot.group(with_app_command=True, fallback="coinflip")
+async def coinflip(ctx):
+    bot = random.choice(['heads!', 'tails!'])
+    await ctx.reply("You flipped a coin and it landed on " + bot)
+
 
 
 bot.run(TOKEN)
