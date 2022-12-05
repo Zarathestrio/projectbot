@@ -62,42 +62,46 @@ async def countLetters(ctx, arg):
     await ctx.reply("There are " + str(count) + " letters in the word " + arg) 
 
 
-@bot.group(with_app_command=True, fallback="rps_rock")
-async def rps_rock(ctx):
+@bot.group(with_app_command=True, fallback="rps")
+async def rps(ctx, arg):
     computer=random.choice(['rock','paper','scissors'])
-    if "scissors" == computer:
-        await ctx.reply("You chose rock.\nThe Bot chose " + computer)
-        await ctx.reply("You Won!!")
-    elif "paper" == computer:
-        await ctx.reply("You chose rock.\nThe Bot chose " + computer)
-        await ctx.reply("The Bot Won!!")
+    if arg == "rock":
+        if "scissors" == computer:
+            await ctx.reply("You chose rock.\nThe Bot chose " + computer)
+            await ctx.reply("You Won!!")
+        elif "paper" == computer:
+            await ctx.reply("You chose rock.\nThe Bot chose " + computer)
+            await ctx.reply("The Bot Won!!")
+        else:
+            await ctx.reply("You chose rock and the Bot chose " + computer + "\nIt's a tie!!")
+    elif arg == "paper":
+        if "rock" == computer:
+            await ctx.reply("You chose paper.\nThe Bot chose " + computer)
+            await ctx.reply("You Won!!")
+        elif "scissors" == computer:
+            await ctx.reply("You chose paper.\nThe Bot chose " + computer)
+            await ctx.reply("The Bot Won!!")
+        else:
+            await ctx.reply("You chose paper and the Bot chose " + computer + "\nIt's a tie!!")
+    elif arg == "scissors":
+        if "paper" == computer:
+            await ctx.reply("You chose scissors.\nThe Bot chose " + computer)
+            await ctx.reply("You Won!!")
+        elif "rock" == computer:
+            await ctx.reply("You chose scissors.\nThe Bot chose " + computer)
+            await ctx.reply("The Bot Won!!")
+        else:
+            await ctx.reply("You chose scissors and the Bot chose " + computer + "\nIt's a tie!!")
     else:
-        await ctx.reply("You chose rock and the Bot chose " + computer + "\nIt's a tie!!")
+        await ctx.reply(arg + " is not a valid option!")
+
+@bot.group(with_app_command=True, fallback="help")
+async def help(ctx):
+    await ctx.reply("Commands\n1.\t^initialize: This initializes the bot in your server and begins monitoring for activity!"
+    + "\n2.\t^rps 'choice': Play Rock Paper Scissors against the bot! Following the command, type your selection to play!"
+    + "\n3.\t^roll 'number of sides': Choose how many sides are on a dice roll! Following the command, type the amount of sides you want on your die."
+    + "\n4.\t^countLetters: Count the amount of letters in a word! Following the command type the word you want counted.")
 
 
-@bot.group(with_app_command=True, fallback="rps_paper")
-async def rps_paper(ctx):
-    computer=random.choice(['rock','paper','scissors'])
-    if "rock" == computer:
-        await ctx.reply("You chose paper.\nThe Bot chose " + computer)
-        await ctx.reply("You Won!!")
-    elif "scissors" == computer:
-        await ctx.reply("You chose paper.\nThe Bot chose " + computer)
-        await ctx.reply("The Bot Won!!")
-    else:
-        await ctx.reply("You chose paper and the Bot chose " + computer + "\nIt's a tie!!")
-
-
-@bot.group(with_app_command=True, fallback="rps_scissors")
-async def rps_scissors(ctx):
-    computer=random.choice(['rock','paper','scissors'])
-    if "paper" == computer:
-        await ctx.reply("You chose scissors.\nThe Bot chose " + computer)
-        await ctx.reply("You Won!!")
-    elif "rock" == computer:
-        await ctx.reply("You chose scissors.\nThe Bot chose " + computer)
-        await ctx.reply("The Bot Won!!")
-    else:
-        await ctx.reply("You chose scissors and the Bot chose " + computer + "\nIt's a tie!!")
 
 bot.run(TOKEN)
